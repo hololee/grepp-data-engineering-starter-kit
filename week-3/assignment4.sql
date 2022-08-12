@@ -5,7 +5,7 @@ CREATE TABLE zayden.monthly_user_paid_summary AS
 		channel,
 		COUNT(DISTINCT usc.userid) as uniqueUsers,
 		COUNT(CASE strn.amount WHEN strn.amount > 0 THEN 1 WHEN strn.amount = 0 THEN NULL END) as paidUsers,
-		CONVERT(DECIMAL(20,6),CONVERT(FLOAT, paidUsers) / NULLIF(uniqueUsers, 0)) as conversionRate,
+		CONVERT(DECIMAL(9, 6),CONVERT(FLOAT, paidUsers) / NULLIF(uniqueUsers, 0)) as conversionRate,
 		SUM(COALESCE(amount, 0)) as grossrevenue,
 		SUM(COALESCE(CASE strn.refunded WHEN TRUE THEN 0 WHEN FALSE THEN strn.amount END, 0)) as netrevenue
 	FROM raw_data.session_timestamp st
