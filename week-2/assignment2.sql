@@ -1,4 +1,4 @@
-SELECT TO_CHAR(st.ts, 'YYYY-mm') date, COUNT(usc.userID) nums
+SELECT TO_CHAR(st.ts, 'YYYY-mm') date, COUNT(DISTINCT usc.userID) nums -- DISTINCT가 추가되어야 unique하게 카운트.
 FROM raw_data.session_timestamp st
 JOIN raw_data.user_session_channel usc ON st.sessionID = usc.sessionID
 GROUP BY 1 -- st.ts가 집계함수나 group by 절에 들어가야함. count가 그룹화를 시키지만 date는 그룹 조건이 없기때문에 오류 발생.
