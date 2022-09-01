@@ -26,7 +26,8 @@ def extract(url):
 
 # T: 파일을 변환 하는 과정.
 def transform(text):
-    lines = text.split("\n")
+    # 헤더는 버리기.
+    lines = text.split("\n")[1:]
     return lines
 
 
@@ -40,7 +41,7 @@ def load(db_info, lines):
         if r != '':
             (name, gender) = r.split(",")
             print(name, "-", gender)
-            sql = "INSERT INTO {id}.name_gender VALUES ('{n}', '{g}')".format(id=db_info[3], n=name, g=gender)
+            sql = "INSERT INTO {id}.name_gender VALUES ('{n}', '{g}');".format(id=db_info[3], n=name, g=gender)
             print(sql)
             cur.execute(sql)
 
@@ -54,7 +55,7 @@ def load_fix(db_info, lines):
         if r != '':
             (name, gender) = r.split(",")
             print(name, "-", gender)
-            sql += "INSERT INTO {id}.name_gender VALUES ('{n}', '{g}')".format(id=db_info[3], n=name, g=gender)
+            sql += "INSERT INTO {id}.name_gender VALUES ('{n}', '{g}');".format(id=db_info[3], n=name, g=gender)
             print(sql)
     sql += "END;"
     cur.execute(sql)
